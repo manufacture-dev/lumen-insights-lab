@@ -9,7 +9,7 @@ This repository is the kit: it builds the training repository with a dated histo
 A small retail analytics module: dashboard KPIs (revenue, orders, average basket, top products) and their CSV export, in Python with no dependency; tests use `unittest`.
 
 - **Tickets in the repository.** `work/` is the ticket board: one Markdown file per ticket, with its status, acceptance criteria and log. Each status change is a commit, so `git log -p work/<file>` is the ticket's history.
-- **History.** Three months of commits by four roles (product owner, dev lead, developer, QA), from 20 July to 23 October 2026. Git flow: `main` at release 1.3.0 (tag `v1.3.0`), work on `develop`.
+- **History.** Three months of commits by four roles (product owner, dev lead, developer, QA), from 20 July to 23 October 2026. Git flow: `main` at release 1.3.0 (tag `v1.3.0`), work on `develop`. The last `develop` commit lets `scripts/ci.sh <branch>` find a branch that exists only on `origin`, as in a fresh clone.
 - **Branches waiting for review**, named in their tickets:
   - `feature/2-retention-cohort`: `scripts/ci.sh` passes.
   - `fix/3-refund-basket`: `scripts/ci.sh` fails.
@@ -49,7 +49,8 @@ A small retail analytics module: dashboard KPIs (revenue, orders, average basket
    ```bash
    taxiway up atelier --type claude-code --driver lima \
      --repo https://github.com/<owner>/lumen-insights --repo-ref develop \
-     --set auth_mode=api-key --set claude-code-version=<release>
+     --set claude-code-version=<release>
+   taxiway auth atelier   # sign in to Claude Code inside the VM
    taxiway shell atelier
    ```
 
