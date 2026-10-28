@@ -42,7 +42,7 @@ def v(path, n):
 # A file is a path in the tree, a (path, source) pair, or a branch overlay ("@<dir>").
 STEPS = [
     ("commit", "2026-07-20T10:12", "lead", "Initial KPI module: revenue and orders for a period",
-     ["README.md", "pyproject.toml", ".gitignore", "CLAUDE.md", ("scripts/ci.sh", VERSIONS / "scripts/ci.sh"),
+     [("README.md", VERSIONS / "README.md"), "pyproject.toml", ".gitignore", ("CLAUDE.md", VERSIONS / "CLAUDE.md"), ("scripts/ci.sh", VERSIONS / "scripts/ci.sh"),
       "src/lumen_insights/__init__.py", "src/lumen_insights/data.py", "src/lumen_insights/kpis.py",
       "tests/__init__.py", "tests/helpers.py", "tests/test_kpis.py", "tests/test_data.py",
       "data/sales_sample.csv"]),
@@ -83,6 +83,8 @@ STEPS = [
     ("checkout", "develop"),
     ("commit", "2026-10-23T17:00", "lead", "work(#3): in-review", [T3]),
     ("commit", "2026-10-23T17:30", "lead", "ci: find a branch that exists only on origin", ["scripts/ci.sh"]),
+    ("commit", "2026-10-23T17:45", "dev", "feat: KPI dashboard page with CSV export link",
+     ["src/lumen_insights/web.py", "tests/test_web.py", "README.md", "CLAUDE.md"]),
 ]
 
 

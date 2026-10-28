@@ -9,6 +9,7 @@ Python 3.11 or later, nothing to install.
 ```bash
 scripts/ci.sh                 # tests of the current checkout
 scripts/ci.sh <branch>        # tests of another branch
+PYTHONPATH=src python3 -m lumen_insights.web   # the dashboard on http://127.0.0.1:8000/
 ```
 
 ## Layout
