@@ -114,8 +114,13 @@ def main():
     parser.add_argument("--data", default=str(DEFAULT_DATA))
     args = parser.parse_args()
     server = ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(load_sales(args.data)))
-    print(f"Dashboard on http://127.0.0.1:{args.port}/")
-    server.serve_forever()
+    print(f"Dashboard on http://127.0.0.1:{args.port}/ (Ctrl-c to stop)")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nDashboard stopped.")
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":
