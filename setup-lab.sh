@@ -44,4 +44,4 @@ ls $HOME/.claude/projects/-lab-work-lumen-insights/*.jsonl | wc -l | xargs echo 
 (PYTHONPATH=src nohup python3 -m lumen_insights.web --port 8000 >/tmp/web.log 2>&1 &); sleep 2
 agent-browser open "http://127.0.0.1:8000/?start=2026-09-01&end=2026-09-30" >/dev/null && agent-browser get text body | head -3; agent-browser close >/dev/null
 for p in $(pgrep -f "lumen_insights[.]web"); do kill $p; done; true'
-echo "== ready. Next: taxiway record start $LAB --name <name>"
+echo "== ready. Next, live: taxiway access; taxiway record start $LAB; taxiway shell $LAB"
