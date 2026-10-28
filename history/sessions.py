@@ -9,7 +9,7 @@ build_history.py turns them into Claude Code transcripts.
 """
 
 REPO = "/lab/work/lumen-insights"
-MEMORY = "/home/jlrigau.guest/.claude/projects/-lab-work-lumen-insights/memory"
+MEMORY = "/home/dev/.claude/projects/-lab-work-lumen-insights/memory"
 
 SESSIONS = [
     {
