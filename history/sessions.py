@@ -40,7 +40,7 @@ SESSIONS = [
         "title": "Draft the top products story",
         "turns": [
             ("user", "I'm the PO. Help me write the story for the top products widget. I'll paste tickets from our tracker into the chat, that's where they live. Remember that for next time so you don't look for them in the repo."),
-            ("tool", "Write", {"file_path": MEMORY + "/tickets-in-tracker.md", "content": "---\nname: tickets-in-tracker\ndescription: tickets live in the team tracker, pasted into the chat\nmetadata:\n  type: project\n---\n\nTickets live in the team tracker, not in the repository. Ask the person to paste the ticket; don't look for it in the repo.\n"},
+            ("tool", "Write", {"file_path": MEMORY + "/tickets-in-tracker.md", "content": "---\nname: tickets-in-tracker\ndescription: tickets live in the team tracker, pasted into the chat\nmetadata:\n  node_type: memory\n  type: project\n  modified: 2026-07-29T14:20:00.000Z\n---\n\nTickets live in the team tracker, not in the repository. Ask the person to paste the ticket; don't look for it in the repo.\n"},
              "File created successfully at: " + MEMORY + "/tickets-in-tracker.md"),
             ("say", "Saved: tickets live in the tracker and you paste them. Paste the top products ticket and I'll draft the story with its acceptance criteria."),
             ("user", "Top 5 products of a period by revenue, with their category. Refunded items don't count."),

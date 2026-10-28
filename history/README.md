@@ -31,4 +31,4 @@ limactl copy history/projects/*.jsonl taxiway-<lab>:.claude/projects/-lab-work-l
 limactl copy history/projects/memory/* taxiway-<lab>:.claude/projects/-lab-work-lumen-insights/memory/
 ```
 
-Install before starting the session that should read them. The sessions are fictional; they hold no secret and no real data.
+Install before starting the session that should read them. In a lab that already has a project memory, append the line of `memory/MEMORY.md` to the existing index instead of replacing it. `limactl copy` keeps the files' dates, which are those of each session's last entry. The sessions are fictional; they hold no secret and no real data.

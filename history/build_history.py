@@ -7,6 +7,7 @@ Claude Code 2.1.311, plus memory/ as the sessions left it. Ids and
 timestamps are derived from the sessions, so a rebuild gives the same files.
 """
 import json
+import os
 import sys
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -163,10 +164,16 @@ def main(out):
     memory = {}
     for session in SESSIONS:
         sid, rows = build(session)
-        (out / f"{sid}.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
+        path = out / f"{sid}.jsonl"
+        # Compact separators, as Claude Code writes them.
+        path.write_text("".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) + "\n" for r in rows))
+        # The file's date is the session's last entry: agents that sort or date sessions by mtime see the past.
+        last = max(datetime.fromisoformat(r["timestamp"].replace("Z", "+00:00")) for r in rows if "timestamp" in r)
+        os.utime(path, (last.timestamp(), last.timestamp()))
         for turn in session["turns"]:
             if turn[0] == "tool" and turn[1] == "Write" and turn[2]["file_path"].startswith(MEMORY):
                 memory[Path(turn[2]["file_path"]).name] = turn[2]["content"]
+                mtimes = last.timestamp()  # the memory dates from the session that wrote it
         print(sid, session["start"][:10], session["who"], session["title"])
     if memory:
         (out / "memory").mkdir(exist_ok=True)
@@ -174,6 +181,8 @@ def main(out):
         for name, content in memory.items():
             (out / "memory" / name).write_text(content)
         (out / "memory" / "MEMORY.md").write_text("".join(index))
+        for f in (out / "memory").iterdir():
+            os.utime(f, (mtimes, mtimes))
 
 
 if __name__ == "__main__":
