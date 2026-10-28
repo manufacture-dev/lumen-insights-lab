@@ -3,8 +3,6 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
-import pytest
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from lumen_insights.data import Sale  # noqa: E402
@@ -14,8 +12,7 @@ def sale(order, day, customer, product, qty, price, category="home", refunded=Fa
     return Sale(order, date.fromisoformat(day), customer, product, category, qty, Decimal(price), refunded)
 
 
-@pytest.fixture
-def sales():
+def sample_sales():
     return [
         sale("O1", "2026-09-02", "C1", "Lamp", 1, "40.00"),
         sale("O1", "2026-09-02", "C1", "Bulb", 4, "2.50"),

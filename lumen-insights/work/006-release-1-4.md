@@ -1,5 +1,11 @@
+---
+id: 6
 title: Release 1.4
-labels: type:chore, status:in-progress
+type: chore
+status: in-progress
+owner: dev lead
+created: 2026-10-21
+updated: 2026-10-21
 ---
 Release planned Wednesday 4 November.
 
@@ -14,3 +20,7 @@ Release planned Wednesday 4 November.
 - Product owner: pending
 - QA: pending
 - Regression checklist: not run
+
+## Log
+
+- 2026-10-21 · dev lead: Release ticket opened.

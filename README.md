@@ -2,18 +2,18 @@
 
 A fictional repository for hands-on workshops on agentic organisations. Lumen Retail, its people and its data are invented.
 
-This repository is the kit: it builds the training repository, with a dated history, and seeds it on GitHub with labels, issues and pull requests. Participants work on the seeded repository, never on this one.
+This repository is the kit: it builds the training repository with a dated history. Participants work on the training repository, inside an isolated [Taxiway](https://github.com/taxiway-sh/taxiway) lab, never on this one.
 
 ## What the training repository looks like
 
-A small retail analytics module: dashboard KPIs (revenue, orders, average basket, top products) and their CSV export, in Python with no runtime dependency.
+A small retail analytics module: dashboard KPIs (revenue, orders, average basket, top products) and their CSV export, in Python with no dependency; tests use `unittest`.
 
-- **History.** Three months of commits by three roles (dev lead, developer, QA), from 20 July to 23 October 2026. Git flow: `main` at release 1.3.0 (tag `v1.3.0`), work on `develop`.
-- **Branches waiting for review.**
-  - `feature/2-retention-cohort`: CI green.
-  - `fix/3-refund-basket`: CI red.
-- **Current practices.** A short `CLAUDE.md`, one personal skill (`spec-from-issue`), PR and story templates, a CI workflow, a release process with a go from product and QA, manual QA with test plans and a regression checklist.
-- **Issues and pull requests.**
+- **Tickets in the repository.** `work/` is the ticket board: one Markdown file per ticket, with its status, acceptance criteria and log. Each status change is a commit, so `git log -p work/<file>` is the ticket's history.
+- **History.** Three months of commits by four roles (product owner, dev lead, developer, QA), from 20 July to 23 October 2026. Git flow: `main` at release 1.3.0 (tag `v1.3.0`), work on `develop`.
+- **Branches waiting for review**, named in their tickets:
+  - `feature/2-retention-cohort`: `scripts/ci.sh` passes.
+  - `fix/3-refund-basket`: `scripts/ci.sh` fails.
+- **Current practices.** A short `CLAUDE.md`, one personal skill (`spec-from-ticket`), ticket templates, a review checklist, a local CI script, a release process with a go from product and QA, manual QA with test plans and a regression checklist.
 
 | # | Type | Status | Subject |
 |---|---|---|---|
@@ -23,37 +23,34 @@ A small retail analytics module: dashboard KPIs (revenue, orders, average basket
 | 4 | Story | ready-for-dev | Growth versus the previous period |
 | 5 | Story | refinement | Filter top products by category |
 | 6 | Chore | in-progress | Release 1.4 |
-| 7 | PR | open | Monthly retention cohorts (`feature/2-retention-cohort`) |
-| 8 | PR | open | Fix average basket with fully refunded orders (`fix/3-refund-basket`) |
 
 ## Layout
 
 | Path | What |
 |---|---|
 | `lumen-insights/` | The files of the training repository, as on `develop` |
+| `versions/` | Earlier versions of ticket files, replayed by the history |
 | `branches/` | The files each review branch adds or changes |
-| `github/` | Labels, issues (with their comments) and pull requests to create |
-| `build_lab.py` | Builds the training repository locally, with its history |
-| `seed_github.py` | Builds it, creates it on GitHub as a private repository and seeds it |
+| `build_lab.py` | Builds the training repository with its history |
 
 ## Use
 
-Build locally only:
+1. Build it and publish it as a **private** repository, which Taxiway will read as the lab's source:
 
-```bash
-python3 -I build_lab.py /tmp/lumen-insights
-```
+   ```bash
+   python3 -I build_lab.py ./lumen-insights
+   cd lumen-insights
+   git remote add origin https://github.com/<owner>/lumen-insights.git
+   git push -u origin --all && git push origin --tags
+   ```
 
-Create and seed on GitHub, with the GitHub CLI (`gh`) logged in:
+2. Create the lab. Taxiway mirrors the repository on the host and clones it into an isolated VM; the agent commits and pushes there, nothing goes back to GitHub. No GitHub token is needed in the lab.
 
-```bash
-python3 -I seed_github.py <owner>/lumen-insights
-```
+   ```bash
+   taxiway up atelier --type claude-code --driver lima \
+     --repo https://github.com/<owner>/lumen-insights --repo-ref develop \
+     --set auth_mode=api-key --set claude-code-version=<release>
+   taxiway shell atelier
+   ```
 
-Run it on a new, empty repository only: the script checks that the issue and PR numbers match those in the history and the documents. Pushing the two review branches triggers CI: #7 turns green, #8 red.
-
-## Before a workshop
-
-- Give the people who drive access to the seeded repository (collaborators), or prepare a machine with the repository cloned, `gh auth login` done and Claude Code up to date.
-- The workshop works on a branch, for example `agentic/workshop`. To run it again, delete that branch. To start from scratch, comments and labels included, seed a new repository.
-- Seed the repository the evening before, so that the pull requests have waited a day.
+3. To run the workshop again from scratch: `taxiway rm atelier`, then `taxiway up` again. The lab's copy starts over from the published repository.

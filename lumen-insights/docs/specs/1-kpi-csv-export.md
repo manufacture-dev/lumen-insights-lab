@@ -14,5 +14,5 @@ None on existing KPIs. New module `export.py`.
 
 ## Open questions
 
-- Should a period with no sale produce an empty file or a header only? Header only, as agreed with the PO in the issue.
+- Should a period with no sale produce an empty file or a header only? Header only, as agreed with the PO in the ticket.
 - Validation of the dates is left to the caller for now.
