@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Bash(pytest:*)", "Bash(git log:*)", "Bash(git diff:*)"]
+  }
+}
