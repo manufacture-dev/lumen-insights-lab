@@ -48,8 +48,7 @@ A small retail analytics module: dashboard KPIs (revenue, orders, average basket
 
    ```bash
    taxiway up atelier --type claude-code --driver lima \
-     --repo https://github.com/<owner>/lumen-insights --repo-ref develop \
-     --set claude-code-version=<release>
+     --repo https://github.com/<owner>/lumen-insights --repo-ref develop
    taxiway auth atelier   # sign in to Claude Code inside the VM
    taxiway shell atelier
    ```
