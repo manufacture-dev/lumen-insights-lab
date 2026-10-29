@@ -33,7 +33,9 @@ in_vm "cat >> $PROJECTS/memory/MEMORY.md" < "$KIT/history/projects/memory/MEMORY
 in_vm "touch -r $PROJECTS/memory/tickets-in-tracker.md $PROJECTS/memory/MEMORY.md 2>/dev/null || true"
 
 echo "== workshop branch"
-in_vm 'git checkout -q develop && (git checkout -q -b agentic/workshop 2>/dev/null || git checkout -q agentic/workshop) && git branch --show-current'
+in_vm 'git checkout -q develop && (git checkout -q -b agentic/workshop 2>/dev/null || git checkout -q agentic/workshop) && git branch --show-current
+# A role identity for the workshop commits (the fresh VM has none: the brick 0 commit would fail).
+git config user.name "Workshop" && git config user.email workshop@lumen.example'
 
 echo "== checks"
 in_vm 'git log --oneline | wc -l | xargs echo commits:
